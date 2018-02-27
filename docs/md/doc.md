@@ -1423,14 +1423,28 @@ setTimeout(() => {
 
 wx.request({
     url: 'xxx',
-    success: function (data) {
-        console.log(data);
+    success: function (res) {
+        console.log(res);
     }
 });
 
-// WePY 使用方式
-wepy.request('xxxx').then((d) => console.log(d));
+// WePY 使用方式1
+// 该写法经过优化，可同时并发超过5个request请求
+wepy.request({
+    url: 'xxx',
+    success: function (res) {
+        console.log(res);
+    }
+});
+
+// WePY 使用方式2
+// 该写法在1.4.1之后版本，需要在wepy项目中手动加入Promise
+// 请参考：如何wepy项目中使用Promise 
+// https://github.com/Tencent/wepy/wiki/wepy项目中使用Promise
+wepy.request('xxxx').then((res) => console.log(res));
+
 ```
+*注意*：在加入Promise的wepy项目中，只能使用wepy.request的第二种写法。
 
 #### 2. 优化事件参数传递
 点这里查看<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/event.html?t=20161122" target="_blank">官方文档</a>
